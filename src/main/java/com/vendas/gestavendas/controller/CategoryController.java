@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CategoryController {
     }
 
     @GetMapping("/api/v1/category/{code}")
-    public ResponseEntity<Optional<Category>> getCategoryByCode(@PathVariable Long code) {
+    public ResponseEntity<Optional<Category>> getCategoryByCode(@PathVariable UUID code) {
         Optional<Category> category = categoryService.getCategoryByCode(code);
         return category.isPresent() ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
     }
