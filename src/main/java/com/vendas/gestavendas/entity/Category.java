@@ -11,13 +11,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "categoria")
-public class Categoria {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
-    private  Long codigo;
+    private  Long code;
 
     @Column(name = "nome")
-    private String nome;
+    private String name;
 }

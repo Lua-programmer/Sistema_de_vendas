@@ -14,30 +14,30 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "produto")
-public class Produto {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
-    private Long codigo;
+    private Long code;
 
     @Column(name = "descricao")
-    private String descricao;
+    private String description;
 
     @Column(name = "quantidade")
-    private Integer quantidade;
+    private Integer quantity;
 
     @Column(name = "preco_custo")
-    private BigDecimal precoCusto;
+    private BigDecimal priceCost;
 
     @Column(name = "preco_venda")
-    private BigDecimal precoVenda;
+    private BigDecimal priceSale;
 
     @Column(name = "observacao")
-    private String observacao;
+    private String observation;
 
     @ManyToOne
     @JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
-    private Categoria Categoria;
+    private Category category;
 
 }
