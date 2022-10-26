@@ -9,3 +9,7 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  flyway:
+    locations:
+      - filesystem:src/main/resources/db/migrations
+    encoding: cp1252

@@ -7,4 +7,3 @@ mvnw
 mvnw.cmd
 build
 src/main/resources/application-dev.yml
-flyway.conf
