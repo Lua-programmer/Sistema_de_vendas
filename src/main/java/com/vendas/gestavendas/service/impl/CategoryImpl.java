@@ -25,4 +25,13 @@ public class CategoryImpl implements CategoryService {
     public Optional<Category> getCategoryByCode(UUID code) {
         return categoryRepository.findByCode(code);
     }
+
+    @Override
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+//    @Override
+//    public void deleteCategory(UUID code) {
+//    }
 }
