@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,13 +31,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> saveCategory(@Valid @RequestBody Category category) {
         Category categorySaved = categoryService.saveCategory(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(categorySaved);
     }
 
     @PutMapping("category/{code}")
-    public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @Valid @RequestBody Category category) {
         return ResponseEntity.ok(categoryService.updateCategory(code, category));
     }
 }
