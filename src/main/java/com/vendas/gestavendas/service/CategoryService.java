@@ -11,5 +11,8 @@ public interface CategoryService {
     Optional<Category> getCategoryByCode(UUID code);
 
     Category saveCategory(Category category);
+
+    Category updateCategory(UUID code, Category category);
+
 //    void deleteCategory(UUID code);
 }

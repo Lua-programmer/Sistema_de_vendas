@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/app/v1/categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
     private final CategoryImpl categoryService;
 
@@ -23,7 +23,7 @@ public class CategoryController {
         return categoryService.getCategories();
     }
 
-    @GetMapping("/api/v1/category/{code}")
+    @GetMapping("category/{code}")
     public ResponseEntity<Optional<Category>> getCategoryByCode(@PathVariable UUID code) {
         Optional<Category> category = categoryService.getCategoryByCode(code);
         return category.isPresent() ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
@@ -33,5 +33,10 @@ public class CategoryController {
     public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
         Category categorySaved = categoryService.saveCategory(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(categorySaved);
+    }
+
+    @PutMapping("category/{code}")
+    public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @RequestBody Category category) {
+        return ResponseEntity.ok(categoryService.updateCategory(code, category));
     }
 }
