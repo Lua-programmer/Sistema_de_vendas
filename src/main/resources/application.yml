@@ -13,3 +13,6 @@ spring:
     locations:
       - filesystem:src/main/resources/db/migrations
     encoding: cp1252
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER

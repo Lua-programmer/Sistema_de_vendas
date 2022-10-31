@@ -68,6 +68,10 @@
 	<td>Flyway-core</td>
 	<td>9.3.1</td>
 </tr>
+<tr>
+	<td>springdoc-openapi-ui</td>
+	<td>1.6.4</td>
+</tr>
 
 </table>
 
@@ -80,6 +84,10 @@ Após clonar a aplicação:
 <br>MYSQL_USER=seuusuario
 <br>MYSQL_PASSWORD=suasenhadeusuario
 <br> No console, rode o comando docker-compose up -d 
+
+<h3>Documentação</h3>
+
+<a>http://localhost:8080/swagger-ui/index.html </a>
 
 <h3>Contribuindo</h3>
 
