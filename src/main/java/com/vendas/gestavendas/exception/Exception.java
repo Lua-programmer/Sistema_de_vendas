@@ -1,5 +1,6 @@
 package com.vendas.gestavendas.exception;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,15 @@ public class Exception extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
+        String msgUser = "Code not found";
+        String msgServer = ex.toString();
+
+        List<Errors> errors = Arrays.asList(new Errors(msgUser, msgServer));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex, WebRequest request) {
         String msgUser = "Code not found";
         String msgServer = ex.toString();
 

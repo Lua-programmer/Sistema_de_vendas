@@ -26,7 +26,7 @@ public class CategoryImpl implements CategoryService {
 
     @Override
     public Optional<Category> getCategoryByCode(UUID code) {
-        return categoryRepository.findByCode(code);
+        return categoryRepository.findById(code);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class CategoryImpl implements CategoryService {
         return categoryByCode.get();
     }
 
-//    @Override
-//    public void deleteCategory(UUID code) {
-//    }
+    @Override
+    public void deleteCategory(UUID code) {
+        categoryRepository.deleteById(code);
+    }
 }

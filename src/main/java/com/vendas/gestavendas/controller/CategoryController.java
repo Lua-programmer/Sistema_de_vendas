@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Api(tags = "Category")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/categories")
@@ -46,5 +45,12 @@ public class CategoryController {
     @PutMapping("category/{code}")
     public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @Valid @RequestBody Category category) {
         return ResponseEntity.ok(categoryService.updateCategory(code, category));
+    }
+
+    @Operation(summary = "Delete category")
+    @DeleteMapping("category/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCategory(@PathVariable UUID code){
+        categoryService.deleteCategory(code);
     }
 }

@@ -14,5 +14,5 @@ public interface CategoryService {
 
     Category updateCategory(UUID code, Category category);
 
-//    void deleteCategory(UUID code);
+    void deleteCategory(UUID code);
 }
