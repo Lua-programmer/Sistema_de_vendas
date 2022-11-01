@@ -94,10 +94,12 @@ Após clonar a aplicação:
 <br> No console, rode o comando docker-compose up -d 
 
 <h3>Documentação</h3>
-<h4>Swagger: <a>http://localhost:8080/swagger-ui/index.html </a></h4>
+<h4>Swagger: </h4>
+<a>http://localhost:8080/swagger-ui/index.html </a>
 
 <h3>Rastreabilidade</h3>
-<h4>Jeager: <a>http://localhost:16686</a></h4>
+<h4>Jeager: </h4>
+<a>http://localhost:16686</a>
 
 <h3>Contribuindo</h3>
 
