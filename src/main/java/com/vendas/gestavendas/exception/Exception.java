@@ -51,7 +51,7 @@ public class Exception extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RuleBusinessException.class)
     public ResponseEntity<Object> handleRuleBusinessException(RuleBusinessException ex, WebRequest request) {
         String msgUser = ex.getMessage();
-        String msgServer = ex.getMessage()post;
+        String msgServer = ex.getMessage();
 
         List<Errors> errors = Arrays.asList(new Errors(msgUser, msgServer));
         return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);

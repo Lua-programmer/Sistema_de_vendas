@@ -16,3 +16,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+
+opentracing:
+  jaeger:
+    service-name: gestao-vendas
+    udp-sender:
+      host: localhost
+      port: 6831
+    sampler-type: const
+    sampler-param: 1
