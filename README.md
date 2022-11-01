@@ -72,6 +72,14 @@
 	<td>springdoc-openapi-ui</td>
 	<td>1.6.4</td>
 </tr>
+<tr>
+	<td>opentracing-spring-jaeger-web-starter</td>
+	<td>3.3.1</td>
+</tr>
+<tr>
+	<td>opentracing-jdbc</td>
+	<td>0.2.15</td>
+</tr>
 
 </table>
 
@@ -86,8 +94,10 @@ Após clonar a aplicação:
 <br> No console, rode o comando docker-compose up -d 
 
 <h3>Documentação</h3>
+<h4>Swagger: <a>http://localhost:8080/swagger-ui/index.html </a></h4>
 
-<a>http://localhost:8080/swagger-ui/index.html </a>
+<h3>Rastreabilidade</h3>
+<h4>Jeager: <a>http://localhost:16686</a></h4>
 
 <h3>Contribuindo</h3>
 
