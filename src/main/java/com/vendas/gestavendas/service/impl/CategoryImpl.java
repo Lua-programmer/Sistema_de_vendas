@@ -2,6 +2,7 @@ package com.vendas.gestavendas.service.impl;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.vendas.gestavendas.entity.Category;
+import com.vendas.gestavendas.exception.RuleBusinessException;
 import com.vendas.gestavendas.repository.CategoryRepository;
 import com.vendas.gestavendas.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,14 @@ public class CategoryImpl implements CategoryService {
 
     @Override
     public Category saveCategory(Category category) {
+        validateDuplicateCategory(category);
         return categoryRepository.save(category);
     }
 
     @Override
     public Category updateCategory(UUID code, Category category) {
         Category categorySaved = validateCategory(code);
+        validateDuplicateCategory(category);
         BeanUtils.copyProperties(category, categorySaved, "code");
         return categoryRepository.save(categorySaved);
     }
@@ -52,5 +55,12 @@ public class CategoryImpl implements CategoryService {
     @Override
     public void deleteCategory(UUID code) {
         categoryRepository.deleteById(code);
+    }
+
+    private void validateDuplicateCategory(Category category) {
+        Category categoryFound = categoryRepository.findByName(category.getName());
+        if (categoryFound != null && categoryFound.getCode() != category.getCode()) {
+            throw new RuleBusinessException(String.format("Category %s already exists", category.getName().toUpperCase()));
+        }
     }
 }
