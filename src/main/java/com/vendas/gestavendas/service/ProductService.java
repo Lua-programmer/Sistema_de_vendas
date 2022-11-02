@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ProductService {
-    List<Product> getProducts();
+    List<Product> getProducts(UUID categoryCode);
 
-    Optional<Product> getProductByCode(UUID code);
+    Optional<Product> getByCodeCategory(UUID code, UUID categoryCode);
 
     Product saveProduct(Product product);
+
+    Product updateProduct(UUID codeCategory, UUID codeProduct, Product product);
 
 }

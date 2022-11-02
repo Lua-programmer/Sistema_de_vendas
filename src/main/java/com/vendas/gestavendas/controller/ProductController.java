@@ -1,7 +1,6 @@
 package com.vendas.gestavendas.controller;
 
 
-import com.vendas.gestavendas.entity.Category;
 import com.vendas.gestavendas.entity.Product;
 import com.vendas.gestavendas.service.impl.ProductImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,20 +16,20 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/v1/category/products")
 public class ProductController {
     private final ProductImpl productService;
 
     @Operation(summary = "To List")
     @GetMapping
-    public List<Product> getProducts() {
-        return productService.getProducts();
+    public List<Product> getProducts(@RequestParam UUID categoryCode) {
+        return productService.getProducts(categoryCode);
     }
 
     @Operation(summary = "List by Code")
     @GetMapping("product/{code}")
-    public ResponseEntity<Optional<Product>> getProductByCode(@PathVariable UUID code) {
-        Optional<Product> product = productService.getProductByCode(code);
+    public ResponseEntity<Optional<Product>> getProductByCode(@PathVariable UUID code, @RequestParam UUID categoryCode) {
+        Optional<Product> product = productService.getByCodeCategory(code, categoryCode);
         return product.isPresent() ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
     }
 
@@ -40,4 +39,11 @@ public class ProductController {
         Product productSaved = productService.saveProduct(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productSaved);
     }
+
+    @Operation(summary = "Update product")
+    @PutMapping("/updateProduct/{code}")
+    public ResponseEntity<Product> updateProduct(@PathVariable UUID code, @RequestParam UUID categoryCode, @Valid @RequestBody Product product) {
+        return ResponseEntity.ok(productService.updateProduct(code, categoryCode, product));
+    }
+
 }
