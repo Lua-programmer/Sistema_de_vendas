@@ -1,16 +1,16 @@
 package com.vendas.gestavendas.controller;
 
 
+import com.vendas.gestavendas.entity.Category;
 import com.vendas.gestavendas.entity.Product;
 import com.vendas.gestavendas.service.impl.ProductImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,5 +32,12 @@ public class ProductController {
     public ResponseEntity<Optional<Product>> getProductByCode(@PathVariable UUID code) {
         Optional<Product> product = productService.getProductByCode(code);
         return product.isPresent() ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
+    }
+
+    @Operation(summary = "Create a new product")
+    @PostMapping
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product) {
+        Product productSaved = productService.saveProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productSaved);
     }
 }

@@ -11,4 +11,6 @@ public interface ProductService {
 
     Optional<Product> getProductByCode(UUID code);
 
+    Product saveProduct(Product product);
+
 }

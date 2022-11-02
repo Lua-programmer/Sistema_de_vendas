@@ -25,4 +25,9 @@ public class ProductImpl implements ProductService {
     public Optional<Product> getProductByCode(UUID code) {
         return productRepository.findById(code);
     }
+
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
