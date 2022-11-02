@@ -1,5 +1,6 @@
 package com.vendas.gestavendas.exception;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,15 @@ public class Exception extends ResponseEntityExceptionHandler {
     @ExceptionHandler(RuleBusinessException.class)
     public ResponseEntity<Object> handleRuleBusinessException(RuleBusinessException ex, WebRequest request) {
         String msgUser = ex.getMessage();
+        String msgServer = ex.getMessage();
+
+        List<Errors> errors = Arrays.asList(new Errors(msgUser, msgServer));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
+        String msgUser = "Code not found";
         String msgServer = ex.getMessage();
 
         List<Errors> errors = Arrays.asList(new Errors(msgUser, msgServer));
