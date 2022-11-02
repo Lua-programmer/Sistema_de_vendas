@@ -21,6 +21,7 @@ import java.util.List;
 @ControllerAdvice
 public class Exception extends ResponseEntityExceptionHandler {
     private static final String CONSTANT_VALIDATION_NOT_BLANK = "NotBlank";
+    private static final String CONSTANT_VALIDATION_NOT_NULL = "NotNull";
     private static final String CONSTANT_VALIDATION_LENGTH = "Length";
 
     @Override
@@ -82,6 +83,9 @@ public class Exception extends ResponseEntityExceptionHandler {
     private String handleUserErrorMessage(FieldError fieldErrors) {
         if (fieldErrors.getCode().equals(CONSTANT_VALIDATION_NOT_BLANK)) {
             return fieldErrors.getDefaultMessage().concat(" é obrigatório.");
+        }
+        if (fieldErrors.getCode().equals(CONSTANT_VALIDATION_NOT_NULL)) {
+            return fieldErrors.getDefaultMessage().concat(" não pode ser nulo.");
         }
         if (fieldErrors.getCode().equals(CONSTANT_VALIDATION_LENGTH)) {
             return fieldErrors.getDefaultMessage().concat(String.format(" deve ter entre %s e %s caracteres", fieldErrors.getArguments()[2], fieldErrors.getArguments()[1]));
