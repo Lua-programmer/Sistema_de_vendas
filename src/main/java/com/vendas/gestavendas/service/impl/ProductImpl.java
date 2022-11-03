@@ -5,10 +5,12 @@ import com.vendas.gestavendas.exception.RuleBusinessException;
 import com.vendas.gestavendas.repository.ProductRepository;
 import com.vendas.gestavendas.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,18 +30,18 @@ public class ProductImpl implements ProductService {
 
     @Override
     public Optional<Product> getByCodeCategory(UUID code, UUID categoryCode) {
-        return productRepository.getByCodeCategory(code, categoryCode);
+        return productRepository.findByCodeCategory(code, categoryCode);
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        validateExistingProductCategory(product.getCategory().getCode());
+    public Product saveProduct(Product product, UUID categoryCode) {
+        validateExistingProductCategory(categoryCode);
         validateDuplicateCategoryCode(product);
         return productRepository.save(product);
     }
 
     @Override
-    public Product updateProduct(UUID codeProduct, UUID codeCategory,  Product product) {
+    public Product updateProduct(UUID codeProduct, UUID codeCategory, Product product) {
         Product productSaved = validateExistingProduct(codeProduct, codeCategory);
         validateDuplicateCategoryCode(product);
         validateExistingProductCategory(codeCategory);
@@ -48,8 +50,8 @@ public class ProductImpl implements ProductService {
     }
 
     private Product validateExistingProduct(UUID codeProduct, UUID codeCategory) {
-        Optional<Product> product =  getByCodeCategory(codeProduct, codeCategory);
-        if(product.isEmpty()) {
+        Optional<Product> product = getByCodeCategory(codeProduct, codeCategory);
+        if (product.isEmpty()) {
             throw new EmptyResultDataAccessException(1);
         }
         return product.get();

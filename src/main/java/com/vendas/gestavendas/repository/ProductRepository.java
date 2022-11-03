@@ -12,10 +12,10 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     List<Product> findByCategoryCode(UUID categoryCode);
 
-    @Query("Select prod "
-            + "from Product prod "
-            + "where prod.code = :code "
-            + "and prod.category.code = :categoryCode")
-    Optional<Product> getByCodeCategory(UUID code, UUID categoryCode);
+    @Query("Select prod"
+            + " from Product prod "
+            + " where prod.code = :code "
+            + " and prod.category.code = :categoryCode")
+    Optional<Product> findByCodeCategory(UUID code, UUID categoryCode);
     Optional<Product> findByCategoryCodeAndDescription(UUID codeCategory, String description);
 }

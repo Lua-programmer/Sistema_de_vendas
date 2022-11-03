@@ -1,6 +1,7 @@
 package com.vendas.gestavendas.service;
 
 import com.vendas.gestavendas.entity.Product;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,7 @@ public interface ProductService {
 
     Optional<Product> getByCodeCategory(UUID code, UUID categoryCode);
 
-    Product saveProduct(Product product);
+    Product saveProduct(Product product, UUID categoryCode);
 
     Product updateProduct(UUID codeCategory, UUID codeProduct, Product product);
 

@@ -35,8 +35,8 @@ public class ProductController {
 
     @Operation(summary = "Create a new product")
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product) {
-        Product productSaved = productService.saveProduct(product);
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product,  @RequestParam UUID categoryCode) {
+        Product productSaved = productService.saveProduct(product, categoryCode);
         return ResponseEntity.status(HttpStatus.CREATED).body(productSaved);
     }
 
