@@ -1,6 +1,7 @@
 package com.vendas.gestavendas.controller;
 
 
+import com.vendas.gestavendas.controller.dto.CategoryRequestDTO;
 import com.vendas.gestavendas.controller.dto.CategoryResponseDTO;
 import com.vendas.gestavendas.entity.Category;
 import com.vendas.gestavendas.service.impl.CategoryImpl;
@@ -38,15 +39,15 @@ public class CategoryController {
 
     @Operation(summary = "Create a new category")
     @PostMapping
-    public ResponseEntity<Category> saveCategory(@Valid @RequestBody Category category) {
-        Category categorySaved = categoryService.saveCategory(category);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categorySaved);
+    public ResponseEntity<CategoryResponseDTO> saveCategory(@Valid @RequestBody CategoryRequestDTO categoryDto) {
+        Category categorySaved = categoryService.saveCategory(categoryDto.convertForEntity());
+        return ResponseEntity.status(HttpStatus.CREATED).body(CategoryResponseDTO.convert(categorySaved));
     }
 
     @Operation(summary = "Update category")
     @PutMapping("category/{code}")
-    public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @Valid @RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.updateCategory(code, category));
+    public ResponseEntity<Category> updateCategory(@PathVariable UUID code, @Valid @RequestBody CategoryRequestDTO categoryDto) {
+        return ResponseEntity.ok(categoryService.updateCategory(code, categoryDto.convertForEntity(code)));
     }
 
     @Operation(summary = "Delete category")
