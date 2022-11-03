@@ -1,11 +1,10 @@
 package com.vendas.gestavendas.controller;
 
 
-import com.vendas.gestavendas.controller.dto.CategoryRequestDTO;
-import com.vendas.gestavendas.controller.dto.CategoryResponseDTO;
+import com.vendas.gestavendas.controller.dto.category.CategoryRequestDTO;
+import com.vendas.gestavendas.controller.dto.category.CategoryResponseDTO;
 import com.vendas.gestavendas.entity.Category;
 import com.vendas.gestavendas.service.impl.CategoryImpl;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package com.vendas.gestavendas.controller;
 
 
+import com.vendas.gestavendas.controller.dto.product.ProductResponseDTO;
 import com.vendas.gestavendas.entity.Product;
 import com.vendas.gestavendas.service.impl.ProductImpl;
 import io.swagger.annotations.Api;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,15 +25,15 @@ public class ProductController {
 
     @Operation(summary = "To List")
     @GetMapping
-    public List<Product> getProducts(@RequestParam UUID categoryCode) {
-        return productService.getProducts(categoryCode);
+    public List<ProductResponseDTO> getProducts(@RequestParam UUID categoryCode) {
+        return productService.getProducts(categoryCode).stream().map(ProductResponseDTO::convert).collect(Collectors.toList());
     }
 
     @Operation(summary = "List by Code")
     @GetMapping("product/{code}")
-    public ResponseEntity<Optional<Product>> getProductByCode(@PathVariable UUID code, @RequestParam UUID categoryCode) {
+    public ResponseEntity<ProductResponseDTO> getProductByCode(@PathVariable UUID code, @RequestParam UUID categoryCode) {
         Optional<Product> product = productService.getByCodeCategory(code, categoryCode);
-        return product.isPresent() ? ResponseEntity.ok(product) : ResponseEntity.notFound().build();
+        return product.isPresent() ? ResponseEntity.ok(ProductResponseDTO.convert(product.get())) : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Create a new product")

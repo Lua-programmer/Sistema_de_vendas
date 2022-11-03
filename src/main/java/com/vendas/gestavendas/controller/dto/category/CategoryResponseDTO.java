@@ -1,4 +1,4 @@
-package com.vendas.gestavendas.controller.dto;
+package com.vendas.gestavendas.controller.dto.category;
 
 import com.vendas.gestavendas.entity.Category;
 import io.swagger.annotations.ApiModel;
