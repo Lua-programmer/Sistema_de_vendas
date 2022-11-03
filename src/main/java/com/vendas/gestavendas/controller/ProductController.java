@@ -35,7 +35,7 @@ public class ProductController {
 
     @Operation(summary = "Create a new product")
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product,  @RequestParam UUID categoryCode) {
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product, @RequestParam UUID categoryCode) {
         Product productSaved = productService.saveProduct(product, categoryCode);
         return ResponseEntity.status(HttpStatus.CREATED).body(productSaved);
     }
@@ -44,6 +44,13 @@ public class ProductController {
     @PutMapping("/updateProduct/{code}")
     public ResponseEntity<Product> updateProduct(@PathVariable UUID code, @RequestParam UUID categoryCode, @Valid @RequestBody Product product) {
         return ResponseEntity.ok(productService.updateProduct(code, categoryCode, product));
+    }
+
+    @Operation(summary = "Delete product")
+    @DeleteMapping("/deleteProduct/{code}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable UUID code, @RequestParam UUID categoryCode) {
+        productService.deleteProduct(code, categoryCode);
     }
 
 }

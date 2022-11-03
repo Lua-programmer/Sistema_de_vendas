@@ -49,6 +49,12 @@ public class ProductImpl implements ProductService {
         return productRepository.save(productSaved);
     }
 
+    @Override
+    public void deleteProduct(UUID codeCategory, UUID codeProduct) {
+        Product product = validateExistingProduct(codeCategory, codeProduct);
+        productRepository.delete(product);
+    }
+
     private Product validateExistingProduct(UUID codeProduct, UUID codeCategory) {
         Optional<Product> product = getByCodeCategory(codeProduct, codeCategory);
         if (product.isEmpty()) {
