@@ -1,8 +1,10 @@
 package com.vendas.gestavendas.controller;
 
 
+import com.vendas.gestavendas.controller.dto.CategoryResponseDTO;
 import com.vendas.gestavendas.entity.Category;
 import com.vendas.gestavendas.service.impl.CategoryImpl;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,15 +25,15 @@ public class CategoryController {
 
     @Operation(summary = "To List")
     @GetMapping
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
+    public List<CategoryResponseDTO> getCategories() {
+        return categoryService.getCategories().stream().map(category -> CategoryResponseDTO.convert(category)).collect(Collectors.toList());
     }
 
     @Operation(summary = "List by Code")
     @GetMapping("category/{code}")
-    public ResponseEntity<Optional<Category>> getCategoryByCode(@PathVariable UUID code) {
+    public ResponseEntity<CategoryResponseDTO> getCategoryByCode(@PathVariable UUID code) {
         Optional<Category> category = categoryService.getCategoryByCode(code);
-        return category.isPresent() ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
+        return category.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(CategoryResponseDTO.convert(category.get()));
     }
 
     @Operation(summary = "Create a new category")

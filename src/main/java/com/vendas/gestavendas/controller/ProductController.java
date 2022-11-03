@@ -3,6 +3,7 @@ package com.vendas.gestavendas.controller;
 
 import com.vendas.gestavendas.entity.Product;
 import com.vendas.gestavendas.service.impl.ProductImpl;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
