@@ -19,7 +19,7 @@ public class CategoryResponseDTO {
     @ApiModelProperty(value = "Name")
     private String name;
 
-    public static CategoryResponseDTO convert(Category category) {
+    public static CategoryResponseDTO convertForDTO(Category category) {
         return new CategoryResponseDTO(category.getCode(), category.getName());
     }
 }

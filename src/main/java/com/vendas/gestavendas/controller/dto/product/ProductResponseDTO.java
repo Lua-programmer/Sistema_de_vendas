@@ -36,8 +36,8 @@ public class ProductResponseDTO {
     @ApiModelProperty(value = "Category")
     private CategoryResponseDTO categoryDto;
 
-    public static ProductResponseDTO convert(Product product) {
+    public static ProductResponseDTO convertForDTO(Product product) {
         return new ProductResponseDTO(product.getCode(), product.getDescription(), product.getQuantity(),
-                product.getPriceCost(), product.getPriceSale(), product.getObservation(), CategoryResponseDTO.convert(product.getCategory()));
+                product.getPriceCost(), product.getPriceSale(), product.getObservation(), CategoryResponseDTO.convertForDTO(product.getCategory()));
     }
 }

@@ -1,10 +1,10 @@
 package com.vendas.gestavendas.controller;
 
 
+import com.vendas.gestavendas.controller.dto.product.ProductRequestDTO;
 import com.vendas.gestavendas.controller.dto.product.ProductResponseDTO;
 import com.vendas.gestavendas.entity.Product;
 import com.vendas.gestavendas.service.impl.ProductImpl;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,30 +23,31 @@ import java.util.stream.Collectors;
 public class ProductController {
     private final ProductImpl productService;
 
-    @Operation(summary = "To List")
+    @Operation(summary = "List All")
     @GetMapping
     public List<ProductResponseDTO> getProducts(@RequestParam UUID categoryCode) {
-        return productService.getProducts(categoryCode).stream().map(ProductResponseDTO::convert).collect(Collectors.toList());
+        return productService.getProducts(categoryCode).stream().map(ProductResponseDTO::convertForDTO).collect(Collectors.toList());
     }
 
     @Operation(summary = "List by Code")
     @GetMapping("product/{code}")
     public ResponseEntity<ProductResponseDTO> getProductByCode(@PathVariable UUID code, @RequestParam UUID categoryCode) {
         Optional<Product> product = productService.getByCodeCategory(code, categoryCode);
-        return product.isPresent() ? ResponseEntity.ok(ProductResponseDTO.convert(product.get())) : ResponseEntity.notFound().build();
+        return product.isPresent() ? ResponseEntity.ok(ProductResponseDTO.convertForDTO(product.get())) : ResponseEntity.notFound().build();
     }
 
     @Operation(summary = "Create a new product")
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product, @RequestParam UUID categoryCode) {
-        Product productSaved = productService.saveProduct(product, categoryCode);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productSaved);
+    public ResponseEntity<ProductResponseDTO> saveProduct(@Valid @RequestBody ProductRequestDTO productDto, @RequestParam UUID categoryCode) {
+        Product productSaved = productService.saveProduct(productDto.convertForEntity(categoryCode), categoryCode);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProductResponseDTO.convertForDTO(productSaved));
     }
 
     @Operation(summary = "Update product")
     @PutMapping("/updateProduct/{code}")
-    public ResponseEntity<Product> updateProduct(@PathVariable UUID code, @RequestParam UUID categoryCode, @Valid @RequestBody Product product) {
-        return ResponseEntity.ok(productService.updateProduct(code, categoryCode, product));
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable UUID code, @RequestParam UUID categoryCode, @Valid @RequestBody ProductRequestDTO productDto) {
+        Product productUpdated = productService.updateProduct(code, categoryCode, productDto.convertForEntity(categoryCode, code));
+        return ResponseEntity.ok(ProductResponseDTO.convertForDTO(productUpdated));
     }
 
     @Operation(summary = "Delete product")
